@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+# Dados sensíveis - nunca versionar
+data/raw/*
+!data/raw/.gitkeep
+outputs/reports/*
+!outputs/reports/.gitkeep
+.env
