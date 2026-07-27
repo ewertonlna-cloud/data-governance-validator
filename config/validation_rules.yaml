@@ -1,0 +1,61 @@
+colunas:
+  nome:
+    obrigatorio: true
+
+  cpf:
+    obrigatorio: true
+    formato: cpf
+
+  email:
+    obrigatorio: true
+    formato: email
+
+  telefone:
+    obrigatorio: true
+    formato: telefone
+
+  data_nascimento:
+    obrigatorio: true
+    formato: data
+    permitir_futuro: false
+
+  cidade:
+    obrigatorio: true
+
+  estado:
+    obrigatorio: true
+    valores_permitidos:
+      - AC
+      - AL
+      - AP
+      - AM
+      - BA
+      - CE
+      - DF
+      - ES
+      - GO
+      - MA
+      - MT
+      - MS
+      - MG
+      - PA
+      - PB
+      - PR
+      - PE
+      - PI
+      - RJ
+      - RN
+      - RS
+      - RO
+      - RR
+      - SC
+      - SP
+      - SE
+      - TO
+
+  salario:
+    obrigatorio: true
+    minimo: 0
+
+global:
+  checar_duplicatas: true

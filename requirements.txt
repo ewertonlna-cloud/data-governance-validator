@@ -3,3 +3,4 @@ openpyxl
 pyyaml
 pydantic
 faker
+pyyaml
