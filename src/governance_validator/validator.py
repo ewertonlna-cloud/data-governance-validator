@@ -147,3 +147,4 @@ class DataValidator:
             "por_regra": df_erros["regra"].value_counts().to_dict(),
             "por_coluna": df_erros["coluna"].value_counts().to_dict(),
         }
+    
