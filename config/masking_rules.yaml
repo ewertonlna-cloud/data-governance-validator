@@ -1,0 +1,12 @@
+colunas:
+  nome:
+    estrategia: pseudonimizar
+
+  cpf:
+    estrategia: mascarar_cpf
+
+  email:
+    estrategia: mascarar_email
+
+  telefone:
+    estrategia: mascarar_telefone
