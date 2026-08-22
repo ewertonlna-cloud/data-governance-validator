@@ -5,3 +5,5 @@ pydantic
 faker
 pyyaml
 jinja2
+pytest
+pytest
