@@ -11,14 +11,11 @@ Uso:
 Se nenhum caminho for passado, usa o dataset de exemplo por padrao.
 """
 import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
-
-from governance_validator.reader import ler_planilha  # noqa: E402
-from governance_validator.validator import DataValidator  # noqa: E402
-from governance_validator.masking import DataMasker  # noqa: E402
-from governance_validator.report import gerar_relatorio_html  # noqa: E402
+from governance_validator.reader import ler_planilha
+from governance_validator.validator import DataValidator
+from governance_validator.masking import DataMasker
+from governance_validator.report import gerar_relatorio_html
 
 
 def main():

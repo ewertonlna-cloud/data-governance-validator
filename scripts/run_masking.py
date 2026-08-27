@@ -3,13 +3,9 @@ scripts/run_masking.py
 
 Aplica o mascaramento/pseudonimizacao sobre o dataset e salva o resultado.
 """
-import sys
-from pathlib import Path
-
 import pandas as pd
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
-from governance_validator.masking import DataMasker  # noqa: E402
+from governance_validator.masking import DataMasker
 
 df = pd.read_csv("data/samples/clientes_fake.csv")
 

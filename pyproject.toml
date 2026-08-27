@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "governance-validator"
+version = "0.1.0"
+description = "Validador de dados + mascaramento de PII para pipelines de IA (governanca/LGPD)"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,11 +1,8 @@
 """
 tests/conftest.py
 
-Faz o pacote governance_validator (dentro de src/) ficar importavel
-pelos testes, sem precisar instalar o projeto formalmente.
-Isso roda automaticamente antes de qualquer teste, gracas ao pytest.
+O pacote governance_validator ja e importavel diretamente porque o
+projeto foi instalado em modo editavel (pip install -e .), definido
+em pyproject.toml. Este arquivo continua aqui como ponto de extensao
+para fixtures compartilhadas futuras.
 """
-import sys
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
