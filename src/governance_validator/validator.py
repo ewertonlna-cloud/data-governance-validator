@@ -2,9 +2,6 @@
 src/governance_validator/validator.py
 
 Motor de validacao de dados, guiado por regras definidas em YAML.
-O objetivo e separar "o que validar" (config/validation_rules.yaml)
-de "como validar" (este arquivo), para que novas regras possam ser
-adicionadas sem alterar codigo.
 """
 import re
 from dataclasses import dataclass
@@ -28,29 +25,21 @@ class DataValidator:
             self.config = yaml.safe_load(f)
         self.erros: list[ErroValidacao] = []
 
-    # ---------------- Checagens por tipo de dado ----------------
-
     @staticmethod
     def _limpar_digitos(valor: str) -> str:
         return re.sub(r"\D", "", str(valor))
 
     def _cpf_valido(self, cpf: str) -> bool:
-        """Valida CPF pelo algoritmo oficial de digitos verificadores,
-        nao apenas pelo formato."""
         cpf = self._limpar_digitos(cpf)
         if len(cpf) != 11 or cpf == cpf[0] * 11:
             return False
-
         digitos = [int(d) for d in cpf]
-
         soma1 = sum(d * peso for d, peso in zip(digitos[:9], range(10, 1, -1)))
         resto1 = soma1 % 11
         digito1 = 0 if resto1 < 2 else 11 - resto1
-
         soma2 = sum(d * peso for d, peso in zip(digitos[:9] + [digito1], range(11, 1, -1)))
         resto2 = soma2 % 11
         digito2 = 0 if resto2 < 2 else 11 - resto2
-
         return digitos[9] == digito1 and digitos[10] == digito2
 
     def _email_valido(self, email: str) -> bool:
@@ -70,9 +59,7 @@ class DataValidator:
             return False
         return True
 
-    # ---------------- Validacao principal ----------------
-
-    def validar(self, df: pd.DataFrame) -> list[ErroValidacao]:
+    def validar(self, df: pd.DataFrame) -> list:
         self.erros = []
         colunas_config = self.config.get("colunas", {})
 
@@ -112,9 +99,14 @@ class DataValidator:
                                           f"Valor '{valor}' nao esta na lista permitida")
 
                 minimo = regras.get("minimo")
-                if minimo is not None and float(valor) < minimo:
-                    self._registrar_erro(idx, nome_coluna, "valor_minimo", valor,
-                                          f"Valor abaixo do minimo permitido ({minimo})")
+                if minimo is not None:
+                    try:
+                        if float(valor) < minimo:
+                            self._registrar_erro(idx, nome_coluna, "valor_minimo", valor,
+                                                  f"Valor abaixo do minimo permitido ({minimo})")
+                    except (ValueError, TypeError):
+                        self._registrar_erro(idx, nome_coluna, "valor_nao_numerico", valor,
+                                              "Valor nao e um numero valido")
 
         if self.config.get("global", {}).get("checar_duplicatas", True):
             self._checar_duplicatas(df)
@@ -129,8 +121,6 @@ class DataValidator:
 
     def _registrar_erro(self, linha, coluna, regra, valor, mensagem):
         self.erros.append(ErroValidacao(linha, coluna, regra, valor, mensagem))
-
-    # ---------------- Saidas ----------------
 
     def gerar_dataframe_erros(self) -> pd.DataFrame:
         if not self.erros:
@@ -147,4 +137,3 @@ class DataValidator:
             "por_regra": df_erros["regra"].value_counts().to_dict(),
             "por_coluna": df_erros["coluna"].value_counts().to_dict(),
         }
-    

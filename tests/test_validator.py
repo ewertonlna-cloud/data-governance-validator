@@ -23,6 +23,8 @@ colunas:
     formato: email
   nome:
     obrigatorio: true
+  salario:
+    minimo: 0
 global:
   checar_duplicatas: false
 """)
@@ -68,3 +70,15 @@ def test_linha_totalmente_valida_nao_gera_erro(validador):
     })
     erros = validador.validar(df)
     assert len(erros) == 0
+
+
+def test_valor_nao_numerico_nao_quebra_a_validacao(validador):
+    df = pd.DataFrame({
+        "cpf": ["111.444.777-35"],
+        "email": ["pessoa@empresa.com"],
+        "nome": ["Pessoa Exemplo"],
+        "salario": ["nao_e_numero"],
+    })
+    erros = validador.validar(df)
+    regras_encontradas = [e.regra for e in erros]
+    assert "valor_nao_numerico" in regras_encontradas

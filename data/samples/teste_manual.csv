@@ -1,0 +1,9 @@
+nome,cpf,email,telefone,data_nascimento,cidade,estado,salario
+Lucas Silva,123.456.789-00,lucas.silva@email.com,(11) 98765-4321,15/03/1995,São Paulo,SP,4500.00
+Mariana Souza,987.654.321-99,mariana.souza@email.com,(21) 99876-5432,22/07/1990,Rio de Janeiro,RJ,5200.00
+Mariana Souza,987.654.321-99,mariana.souza@email.com,(21) 99876-5432,22/07/1990,Rio de Janeiro,RJ,5200.00
+Carlos Oliveira,456.789.123-11,carlos.oliveira@email.com,(31) 97654-3210,05/11/1988,Belo Horizonte,MG,3800.00
+Roberto Santos,111.222.333-44,roberto.santos@email.com,(41) 96543-2109,10/01/1982,Curitiba,PR,6100.00
+Beatriz Lima,321.654.987-22,beatriz.limagmail.com,(51) 95432-1098,18/09/2001,Porto Alegre,RS,2900.00
+,654.987.321-33,fernanda.alves@email.com,(71) 94321-0987,30/04/1997,Salvador,BA,3400.00
+Gabriel Rocha,789.123.456-55,gabriel.rocha@email.com,(81) 93210-9876,12/12/1993,Recife,XX,4100.00
