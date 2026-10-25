@@ -3,9 +3,7 @@ openpyxl
 pyyaml
 pydantic
 faker
-pyyaml
 jinja2
-pytest
 pytest
 python-dotenv
 anthropic
