@@ -9,9 +9,10 @@ Empresas que usam IA (treinamento, RAG, agentes) frequentemente alimentam esses 
 ## O que a ferramenta faz
 
 1. **Lê** uma planilha (CSV ou Excel)
-2. **Valida** os dados contra um conjunto de regras configuráveis (campos obrigatórios, formato de CPF/e-mail/telefone, valores permitidos, valores mínimos, duplicatas)
-3. **Protege dados sensíveis** com duas estratégias diferentes: mascaramento (formato parcialmente visível) e pseudonimização (hash irreversível)
+2. **Valida** os dados contra um conjunto de regras configuráveis (campos obrigatórios, formato de CPF/e-mail/telefone, valores permitidos, valores mínimos, duplicatas). A validação é **informativa**: os erros vão para o relatório, mas não interrompem o pipeline
+3. **Protege dados sensíveis** com duas estratégias diferentes: mascaramento (formato parcialmente visível) e pseudonimização (hash SHA-256, que **não** é anonimização: veja as limitações)
 4. **Gera um relatório HTML** com o resumo da qualidade dos dados e das colunas protegidas
+5. **(Opcional) Gera um resumo executivo com IA.** A IA recebe apenas estatísticas agregadas (contagens de erros), **nunca os dados dos clientes**, e o pipeline funciona normalmente sem ela
 
 ## Arquitetura
 
@@ -124,9 +125,11 @@ Cobertura focada nos pontos críticos: validação de CPF (caso válido, inváli
 
 ## Limitações conhecidas e melhorias futuras
 
-- A pseudonimização por hash não resiste a ataques de força bruta em campos de baixa entropia (CPF). Uma versão futura substituiria isso por **tokenização** (mapa aleatório armazenado separadamente).
+- - A pseudonimização por hash (aplicada hoje ao **nome**) não resiste a um ataque de dicionário: nomes comuns formam um conjunto pequeno de possibilidades, e o salt é fixo, então a mesma tabela de hashes serve para qualquer registro. O CPF, que tem apenas ~1 bilhão de combinações, sofreria do mesmo problema se fosse pseudonimizado, e hoje ele é mascarado, não hasheado. Uma versão futura substituiria o hash por **tokenização** (mapa aleatório armazenado separadamente).
+- A validação é **informativa**, não bloqueante: os erros vão para o relatório e o pipeline segue adiante. Uma versão futura teria um modo que interrompe o processamento quando encontra erros.
+- Não há **log de auditoria** persistente (quem rodou, quando, sobre qual arquivo, com qual resultado): hoje só há mensagens de progresso no terminal.
+- O mascaramento é garantido **dentro** do pipeline, mas nada impede outro script de ler a planilha original sem passar por ele: a proteção depende de convenção de uso, não de imposição da arquitetura.
 - A detecção de dados sensíveis hoje é baseada em colunas conhecidas (regex). Uma evolução natural seria incorporar **NLP/NER** (ex: Microsoft Presidio) para detectar PII em campos de texto livre.
-- O relatório atualmente mostra estatísticas; uma versão futura incluiria um resumo em linguagem natural gerado por LLM.
 
 ## Licença
 
