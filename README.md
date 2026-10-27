@@ -125,7 +125,7 @@ Cobertura focada nos pontos críticos: validação de CPF (caso válido, inváli
 
 ## Limitações conhecidas e melhorias futuras
 
-- - A pseudonimização por hash (aplicada hoje ao **nome**) não resiste a um ataque de dicionário: nomes comuns formam um conjunto pequeno de possibilidades, e o salt é fixo, então a mesma tabela de hashes serve para qualquer registro. O CPF, que tem apenas ~1 bilhão de combinações, sofreria do mesmo problema se fosse pseudonimizado, e hoje ele é mascarado, não hasheado. Uma versão futura substituiria o hash por **tokenização** (mapa aleatório armazenado separadamente).
+- A pseudonimização por hash (aplicada hoje ao **nome**) não resiste a um ataque de dicionário: nomes comuns formam um conjunto pequeno de possibilidades, e o salt é fixo, então a mesma tabela de hashes serve para qualquer registro. O CPF, que tem apenas ~1 bilhão de combinações, sofreria do mesmo problema se fosse pseudonimizado, e hoje ele é mascarado, não hasheado. Uma versão futura substituiria o hash por **tokenização** (mapa aleatório armazenado separadamente).
 - A validação é **informativa**, não bloqueante: os erros vão para o relatório e o pipeline segue adiante. Uma versão futura teria um modo que interrompe o processamento quando encontra erros.
 - Não há **log de auditoria** persistente (quem rodou, quando, sobre qual arquivo, com qual resultado): hoje só há mensagens de progresso no terminal.
 - O mascaramento é garantido **dentro** do pipeline, mas nada impede outro script de ler a planilha original sem passar por ele: a proteção depende de convenção de uso, não de imposição da arquitetura.
